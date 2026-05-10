@@ -83,22 +83,6 @@ Because of this, `mpv` inside proot often produces errors such as:
 ```text
 Could not open/initialize audio device -> no sound
 ```
-
-## Current Workaround
-
-Audio playback inside proot can still work by bridging audio through Termux PulseAudio:
-
-```text
-proot mpv → PulseAudio → Termux → Android audio system
-```
-
-This requires:
-
-1. PulseAudio running in normal Termux
-2. Exporting `PULSE_SERVER=127.0.0.1` inside the proot distro
-
-Without this bridge, audio playback inside proot distros will usually fail.
-
 ---
 
 ## Screenshots
@@ -162,7 +146,7 @@ Inside mpv:
 ```text
 SPACE   Play/Pause
 q       Quit
-← →     Seek
+← →    Seek
 L       Toggle loop
 M       Mute
 9/0     Volume
@@ -230,13 +214,13 @@ Install dependencies normally inside your distro.
 Example for Arch Linux:
 
 ```bash
-pacman -S python python-pip ffmpeg mpv pulseaudio
+pacman -S python python-pip ffmpeg mpv 
 ```
 
 Example for Fedora:
 
 ```bash
-dnf install python3 python3-pip ffmpeg mpv pulseaudio
+dnf install python3 python3-pip ffmpeg mpv 
 ```
 
 Install Python dependencies:
@@ -244,26 +228,6 @@ Install Python dependencies:
 ```bash
 pip install -U yt-dlp rich InquirerPy requests
 ```
-
-Important:
-
-Before using mpv inside proot distros, you must connect the distro to Termux PulseAudio.
-
-In normal Termux:
-
-```bash
-pulseaudio --start --exit-idle-time=-1
-pacmd load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1
-```
-
-Inside the proot distro:
-
-```bash
-export PULSE_SERVER=127.0.0.1
-```
-
-Then launch songcli normally.
-
 ---
 
 ## Dependencies
@@ -277,7 +241,6 @@ Then launch songcli normally.
 - Rich
 - InquirerPy
 - requests
-- PulseAudio (recommended for proot environments)
 
 ---
 
@@ -312,7 +275,6 @@ Planned features for future versions:
 - Search improvements
 - Animated progress bars
 - Metadata editor
-- Music recommendations
 - Multi-threaded downloads
 
 ---
@@ -322,7 +284,7 @@ Planned features for future versions:
 If you like this project, consider supporting it:
 
 <p align="center">
-  <a href="https://www.buymeacoffee.com/your-username">
+  <a href="https://www.buymeacoffee.com/Ritusmin325k">
     <img src="https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=&slug=your-username&button_colour=FFDD00&font_colour=000000&font_family=Inter&outline_colour=000000&coffee_colour=ffffff" alt="Buy Me a Coffee"/>
   </a>
 </p>
